@@ -76,6 +76,35 @@ class Tree
       [tree[0].value, value_tree(tree[1]), []]
     end
   end
+
+  def run_dfs(value)
+    puts depth_first_search(value, @tree, 0)
+  end
+
+  def depth_first_search(value, tree, counter)
+    if tree[0].nil?
+    elsif check_match(value, tree[0], counter)
+    elsif depth_first_search(value, tree[1], counter+1)
+    elsif depth_first_search(value, tree[2], counter+1)
+    end
+  end
+
+  def check_match(value, node, counter)
+    if node.value == value
+      parent = node.parent ? node.parent.value : 'NA'
+      if node.left_child && node.right_child
+        print "The node containing #{value} is #{counter} relationships from the root, and has parent #{parent}, left child #{node.left_child.value}, and right child #{node.right_child.value}."
+        true
+      elsif node.left_child
+        print "The node containing #{value} is #{counter} relationships from the root, and has parent #{parent}, left child #{node.left_child.value}, and no right child."
+      elsif node.right_child
+        print "The node containing #{value} is #{counter} relationships from the root, and has parent #{parent}, right child #{node.right_child.value}, and no left child."
+     end 
+    else
+      false
+    end
+  end
+
   # def depth_first_search(value, tree = @tree, queue = [], counter = 0)
   #   queue = [tree[0]]
   #   found = false
@@ -95,14 +124,7 @@ class Tree
   #   end
   # end
 
-  def check_match(node, value, counter)
-    if node.value == value
-      print "The node containing #{value} is #{counter} relationships from the root, and has parent: #{node.parent}, left child: #{node.left_child}, and right child: #{node.right_child}."
-      true
-    else
-      false
-    end
-  end
+  
 end
 
 
@@ -110,3 +132,5 @@ tree = Tree.new([1, 3, 2, 5, 4, 9])
 tree.build_tree
 puts ''
 print tree.print_tree
+puts ''
+tree.run_dfs(3)
