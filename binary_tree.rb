@@ -135,34 +135,4 @@ class Tree
       false
     end
   end
-
-  # def depth_first_search(value, tree = @tree, queue = [], counter = 0)
-  #   queue = [tree[0]]
-  #   found = false
-  #   until queue.empty? || found do
-  #     current = queue[0]
-  #     result = current.value
-  #     found = check_match(current, value, counter)
-  #     else
-  #       if current.left_child && current.right_child
-  #         if check_match(current.left_child, value, counter+1)
-  #         else queue += current.left_child
-  #         end
-  #         if check_match(current.right_child, value, counter+1)
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
-
-  
 end
-
-
-tree = Tree.new([1, 3, 2, 5, 4, 9])
-tree.build_tree
-puts ''
-print tree.print_tree
-puts ''
-tree.run_dfs(3)
-tree.run_bfs(3)
