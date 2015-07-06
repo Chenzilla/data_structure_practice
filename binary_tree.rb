@@ -89,6 +89,37 @@ class Tree
     end
   end
 
+  def run_bfs(value)
+    queue = [@tree[0]]
+    puts breadth_first_search(queue, value, 0)
+  end
+
+  def breadth_first_search(queue, value, counter)
+    while queue.any? do
+      node = queue[0]
+      if check_match(value, node, counter) || check_children(value, node, counter+1)
+      end
+      queue = add_queue(node, queue[1..-1])
+    end
+  end
+
+  def check_children(value, node, counter)
+    if node.left_child && node.right_child
+      if check_match(value, node.left_child, counter) || check_match(value, node.right_child, counter)
+      end
+    elsif node.left_child
+      check_match(value, node.left_child, counter)
+    elsif node.right_child
+      check_match(value, node.right_child, counter)
+    end
+  end
+
+  def add_queue(node, queue)
+    queue << node.left_child if !queue.include?(node.left_child) && node.left_child
+    queue << node.right_child if node.right_child && !queue.include?(node.right_child)
+    queue
+  end
+
   def check_match(value, node, counter)
     if node.value == value
       parent = node.parent ? node.parent.value : 'NA'
@@ -134,3 +165,4 @@ puts ''
 print tree.print_tree
 puts ''
 tree.run_dfs(3)
+tree.run_bfs(3)
