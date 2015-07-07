@@ -55,30 +55,57 @@ class Knight
   # end
 
   def breadth_first_search(target_coords, current_coords, 
-                           move_queue, queue, discovered)
-    while queue.any? do
-
-      return move_queue << next_move if current_coords == target_coords
-      
-      undiscovered = []
-      possible_moves(current_coords).each do |move|
-        if discovered.exist?(move)
-          undiscovered << move 
-        else 
-          discovered << move
-        end       
-      end
- 
-      undiscovered.each_with_index do |move, index|
-        check = breadth_first_search(target_coords, move, move_queue<<move, queue<<move)
-        if check.length < check_index
-      end
+                           move_queue, discovered)
+  puts "Current coords: #{current_coords}"
+    if current_coords == target_coords
+      puts 'Found it'
+      puts "This is the move_queue: #{move_queue}"
+      return [[current_coords]]
+    elsif discovered.include?(current_coords)
+      return false
     end
-    move_queue
+    puts "Before discovered compare: #{discovered}"
+    puts "possible moves: #{possible_moves(current_coords)}"
+    undiscovered = []
+    possible_moves(current_coords).each do |move|
+      if discovered.include?(move)
+      else 
+        undiscovered << move
+      end       
+    end
+    puts "Before undiscovered check: #{undiscovered}"
+    if undiscovered.any? 
+      first = true
+      check_index = 0
+      list = 0
+      undiscovered.each_with_index do |move, index|
+        puts "Undiscovered origin: #{move}, at index #{index}, with options: #{undiscovered}"
+        check_list = breadth_first_search(target_coords, move, move_queue<<move, discovered+[move])
+        if check_list
+          puts "Checklist: #{check_list}, List: #{list}"
+          if first 
+            puts 'First'
+            check_index = index
+            list = check_list
+            first = false
+          elsif check_list.length < list.length
+            'Less than'
+            check_index = index
+            list = check_list
+          else
+            puts 'Larger'
+          end
+        end
+      end
+      return move_queue += undiscovered[check_index]
+    else 
+      puts 'dead end'
+      return false
+    end
   end
 
-  def run_bfs(target_coords, current_coords=@coords)
-    breadth_first_search(target_coords, current_coords, [current_coords])
+  def run_bfs(current_coords=@coords, target_coords)
+    breadth_first_search(target_coords, current_coords, [current_coords], [])
   end
 end
 
