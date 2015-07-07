@@ -136,3 +136,12 @@ class Tree
     end
   end
 end
+
+
+tree = Tree.new([1, 3, 2, 5, 4, 9])
+tree.build_tree
+puts ''
+print tree.print_tree
+puts ''
+tree.run_dfs(3)
+tree.run_bfs(3)

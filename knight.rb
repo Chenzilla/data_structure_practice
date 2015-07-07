@@ -20,9 +20,9 @@ class Knight
     end
   end
 
-  def distance_to(current_coords, target_coords)
-    Math.sqrt((@coords[0] - target_coords[0])**2 + (@coords[1] - target_coords[1])**2)
-  end
+  # def distance_to(current_coords, target_coords)
+  #   Math.sqrt((@coords[0] - target_coords[0])**2 + (@coords[1] - target_coords[1])**2)
+  # end
 
   def possible_moves(coords = @coords)
     moves_list = []
@@ -54,18 +54,24 @@ class Knight
   #   array[current_index]
   # end
 
-  def breadth_first_search(target_coords, current_coords, move_queue, queue)
-    while distance_to(current_coords, target_coords) != 0 do
-      possible = possible_moves(current_coords)
-      if current_coords == target_coords
-        return move_queue << next_move
-      else 
-        print "Current coords: #{current_coords}"
-        puts ''
-        next_move = queue[0]
-        puts "Next move: #{next_move}"
-        puts"Distance to: #{distance_to(current_coords, target_coords)}"
-        breadth_first_search(target_coords, next_move, move_queue<<next_move)
+  def breadth_first_search(target_coords, current_coords, 
+                           move_queue, queue, discovered)
+    while queue.any? do
+
+      return move_queue << next_move if current_coords == target_coords
+      
+      undiscovered = []
+      possible_moves(current_coords).each do |move|
+        if discovered.exist?(move)
+          undiscovered << move 
+        else 
+          discovered << move
+        end       
+      end
+ 
+      undiscovered.each_with_index do |move, index|
+        check = breadth_first_search(target_coords, move, move_queue<<move, queue<<move)
+        if check.length < check_index
       end
     end
     move_queue
