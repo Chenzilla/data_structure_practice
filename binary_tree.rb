@@ -140,8 +140,8 @@ end
 
 tree = Tree.new([1, 3, 2, 5, 4, 9])
 tree.build_tree
-puts ''
-print tree.print_tree
-puts ''
 tree.run_dfs(3)
 tree.run_bfs(3)
+
+#results: => 
+#The node containing 3 is 1 relationships from the root, and has parent 4, left child 1, and no right child.The node containing 3 is 0 relationships from the root, and has parent 4, left child 1, and no right child.
